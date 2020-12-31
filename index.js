@@ -23,7 +23,6 @@ client.once("ready", () => {
 });
 
 client.on("message", (message) => {
-    console.log(message.content);
     // Default Command handling
     const args = message.content
         .slice(client.config.prefix.length)
