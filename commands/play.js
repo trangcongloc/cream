@@ -4,7 +4,8 @@ const Discord = require("discord.js");
 
 module.exports = {
     name: "play",
-    description: "play music",
+    aliases: [],
+    description: "play command from music modules",
     async execute(client, message, args) {
         const ytRegexURL = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/gim;
         if (!message.guild) return;
@@ -38,7 +39,7 @@ module.exports = {
                     client.user.avatarURL()
                 );
 
-            connection.play(
+            const dispatcher = connection.play(
                 ytdl(song.url, {
                     filter: "audioonly",
                 })

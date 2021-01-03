@@ -23,7 +23,6 @@ client.once("ready", () => {
 });
 
 client.on("message", (message) => {
-    // Default Command handling
     const args = message.content
         .slice(client.config.prefix.length)
         .trim()
@@ -32,10 +31,16 @@ client.on("message", (message) => {
 
     if (message.content.startsWith(client.config.prefix)) {
         message.delete({ timeout: 1500 });
-        if (!client.commands.has(commandName)) return;
 
         try {
-            client.commands.get(commandName).execute(client, message, args);
+            const command =
+                client.commands.get(commandName) ||
+                client.commands.find(
+                    (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
+                );
+            command.execute(client, message, args);
+
+            if (!command) return;
         } catch (_err) {
             console.error(_err);
         }

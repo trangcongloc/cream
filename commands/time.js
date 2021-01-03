@@ -4,6 +4,7 @@ const { MessageAttachment } = require("discord.js");
 module.exports = {
     name: "time",
     description: "Showing Discord Created date/time",
+    aliases: ["created"],
     execute(client, message, args) {
         time.snowflake(message.author.id, () => {
             const attachment = new MessageAttachment("images/snowflake.png");

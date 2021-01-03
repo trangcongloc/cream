@@ -1,6 +1,7 @@
 module.exports = {
     name: "bug",
     description: "Hành hình",
+    aliases: ["exodia"],
     execute(client, message, args) {
         const target = message.mentions.members.first();
         const exePerm = message.member.roles.cache.find(

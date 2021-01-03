@@ -1,6 +1,7 @@
 module.exports = {
     name: "join",
     description: "Join Voice Channel",
+    aliases: ["cream"],
     async execute(client, message, args) {
         if (!message.guild) return;
         if (message.member.voice.channel) {
