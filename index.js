@@ -19,7 +19,7 @@ for (const file of commandFiles) {
     client.commands.set(commandName.name, commandName);
 }
 client.once("ready", () => {
-    console.log("Hello there");
+    console.log("Cream on Duty");
 });
 
 client.on("message", (message) => {
