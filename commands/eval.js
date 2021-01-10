@@ -3,6 +3,6 @@ module.exports = {
     description: "running Eval",
     aliases: ["run"],
     execute(client, message, args) {
-        eval(args.join(" ").replace("```js\n", "").replace("\n```", ""));
+        eval(args[0]);
     },
 };

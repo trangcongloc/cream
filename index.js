@@ -62,6 +62,5 @@ client.on("message", (message) => {
 
 // console uncaught error
 process.on("uncaughtException", (_err, origin) => {
-    console.log("UNCAUGHT ERROR");
     console.error(_err);
 });

@@ -1,4 +1,4 @@
-const time = require("../modules/createdTime.js");
+const time = require("../modules/etc.js");
 const { MessageAttachment } = require("discord.js");
 
 module.exports = {
