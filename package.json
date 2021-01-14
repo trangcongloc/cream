@@ -14,7 +14,8 @@
     "dotenv": "^8.2.0",
     "ffmpeg-static": "^4.2.7",
     "puppeteer": "^5.5.0",
+    "request": "^2.88.2",
     "yt-search": "^2.5.1",
-    "ytdl-core": "^4.4.2"
+    "ytdl-core": "^4.4.3"
   }
 }
