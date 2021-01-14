@@ -47,7 +47,7 @@ module.exports = {
 
                     message.channel
                         .send(tinderEmbed)
-                        .then((msg) => msg.delete({ timeout: 15000 }));
+                        .then((msg) => msg.delete({ timeout: 20000 }));
             }
         });
     },
