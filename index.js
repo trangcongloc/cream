@@ -45,6 +45,7 @@ client.on("message", (message) => {
 		case client.config.channels.confession:
 			// webhooks
 			const webhookClient = new Discord.WebhookClient(client.config.webhooks.confession.id, client.config.webhooks.confession.token);
+
 			message.delete({ timeout: 0 });
 			const cfsChannel = message.guild.channels.cache.get(client.config.channels.general);
 			webhookClient.send(message.content);

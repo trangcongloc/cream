@@ -10,6 +10,6 @@
 	},
 	"webhooks": {
 		"confession": { "id": "800470178424422430", "token": "HFDWcTJMHc8HkWIeifQvf86hzM3a9QkYEGxQEC3rT4qZnBLhvyVgabZyW5mRV4zttVUW" },
-		"music": { "id": "800474328218730518", "token": "HFDWcTJMHc8HkWIeifQvf86hzM3a9QkYEGxQEC3rT4qZnBLhvyVgabZyW5mRV4zttVUW" }
+		"tinder": { "id": "800475362400010300", "token": "Y4t-HL7iJucpne48f4n2lcr4mFiGfylPXdMTXE105Y8Df8zltpwcDmlum5AiCM49LPQn" }
 	}
 }

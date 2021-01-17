@@ -1,7 +1,6 @@
 const tinder = require("../modules/tinder.js");
 require("dotenv").config();
 const Discord = require("discord.js");
-const request = require("request");
 
 module.exports = {
 	name: "tinder",
