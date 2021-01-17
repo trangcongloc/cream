@@ -7,5 +7,9 @@
 	"emoji": {
 		"goose": "<a:goose:780005119143968769>",
 		"meowtf": "<:meowtf:779168833129807893>"
+	},
+	"webhooks": {
+		"confession": { "id": "800470178424422430", "token": "HFDWcTJMHc8HkWIeifQvf86hzM3a9QkYEGxQEC3rT4qZnBLhvyVgabZyW5mRV4zttVUW" },
+		"music": { "id": "800474328218730518", "token": "HFDWcTJMHc8HkWIeifQvf86hzM3a9QkYEGxQEC3rT4qZnBLhvyVgabZyW5mRV4zttVUW" }
 	}
 }
