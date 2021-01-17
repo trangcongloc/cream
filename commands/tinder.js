@@ -79,7 +79,7 @@ module.exports = {
 								const reaction = collected.first();
 
 								if (reaction.emoji.name === "👍") {
-									tinder.dislike(user._id, process.env.TINDER_TOKEN, (data) => {
+									tinder.like(user._id, process.env.TINDER_TOKEN, (data) => {
 										// console.log(data);
 									});
 									msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));
