@@ -4,51 +4,104 @@ const Discord = require("discord.js");
 const request = require("request");
 
 module.exports = {
-    name: "tinder",
-    description: "Tinder Image",
-    aliases: ["td"],
-    execute(client, message, args) {
-        tinder.core(process.env.TINDER_TOKEN, (info) => {
-            switch (info.meta.status) {
-                case 200:
-                    console.log();
-                    const user =
-                        info.data.results[
-                            Math.floor(
-                                Math.random() * (info.data.results.length - 1)
-                            )
-                        ].user;
+	name: "tinder",
+	description: "Tinder Image",
+	aliases: ["td"],
+	execute(client, message, args) {
+		tinder.core(process.env.TINDER_TOKEN, (info) => {
+			switch (info.meta.status) {
+				case 200:
+					const profile = info.data.results[Math.floor(Math.random() * (info.data.results.length - 1))];
+					const user = profile.user;
+					// school
+					const userSchool = user.schools.length != 0 ? user.schools[0].name : " ¯\\_(ツ)_/¯";
 
-                    // remove from recommend
-                    const options = {
-                        url: `https://api.gotinder.com/pass/${user._id}`,
-                        headers: {
-                            "x-auth-token": process.env.TINDER_TOKEN,
-                        },
-                    };
+					// workplace
+					const userJob = user.jobs.length != 0 ? user.jobs[0].name : " ¯\\_(ツ)_/¯";
 
-                    request(options, (_err, response, body) => {
-                        console.log(JSON.parse(body).status);
-                    });
+					// Location
+					const userLocation = user.city == undefined ? "(っ °Д °;)っ đâu đó cách đây" : `Tại ${user.city.name} cách đây`;
 
-                    const tinderEmbed = new Discord.MessageEmbed()
-                        .setColor(message.member.displayHexColor)
-                        .setTitle(
-                            `🌟 ${user.name} | ${user.birth_date.slice(0, 4)}`
-                        )
-                        .setAuthor(
-                            message.member.nickname,
-                            message.author.avatarURL()
-                        )
-                        .setDescription(user.bio)
-                        .setImage(user.photos[0].url)
-                        .setTimestamp()
-                        .setFooter(user._id, user.photos[0].url);
+					// interets
+					let interests;
+					let interests_string = "";
 
-                    message.channel
-                        .send(tinderEmbed)
-                        .then((msg) => msg.delete({ timeout: 20000 }));
-            }
-        });
-    },
+					const userName = user.badges != [] ? `✅ ${user.name}` : user.name;
+					if (profile.experiment_info == undefined) {
+						interests_string = " ¯\\_(ツ)_/¯";
+					} else {
+						interests = profile.experiment_info.user_interests.selected_interests;
+						interests.forEach((i) => {
+							interests_string += `- ${i.name}\n`;
+						});
+					}
+					const tinderEmbed = new Discord.MessageEmbed()
+						.setColor(message.member.displayHexColor)
+						.setTitle(`${userName} - ${user.birth_date.slice(0, 4)}`)
+						.setAuthor(
+							`${userLocation} ${Math.ceil(profile.distance_mi * 1.6)} km`,
+							"https://www.pinclipart.com/picdir/big/363-3639653_location-pin-transparent-location-logo-png-vector-clipart.png"
+						)
+						.addFields(
+							{
+								name: "😍 Sở thích",
+								value: interests_string,
+								inline: true,
+							},
+							{
+								name: "🏫 Học tại",
+								value: userSchool,
+								inline: true,
+							},
+							{
+								name: "💼 Làm việc tại",
+								value: userJob,
+								inline: true,
+							}
+						)
+						.setDescription(user.bio)
+						.setImage(user.photos[0].url)
+						.setTimestamp()
+						.setFooter(user._id, message.author.avatarURL());
+
+					message.channel.send(tinderEmbed).then((msg) => {
+						msg.react("👍").then(() => msg.react("👎"));
+						const filter = (reaction, user) => {
+							return ["👍", "👎"].includes(reaction.emoji.name) && user.id === message.author.id;
+						};
+
+						msg.awaitReactions(filter, {
+							max: 1,
+							time: 19999,
+							errors: ["time"],
+						})
+							.then((collected) => {
+								const reaction = collected.first();
+
+								if (reaction.emoji.name === "👍") {
+									tinder.dislike(user._id, process.env.TINDER_TOKEN, (data) => {
+										// console.log(data);
+									});
+									msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));
+									message.reply(`Đã Like ${user.name} 😍`).then((msg) => {
+										msg.delete({ timeout: 10000 });
+									});
+								} else {
+									tinder.dislike(user._id, process.env.TINDER_TOKEN, (data) => {
+										// console.log(data);
+									});
+									msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));
+									message.reply(`Đã Dislike ${user.name} 😢`).then((msg) => {
+										msg.delete({ timeout: 10000 });
+									});
+								}
+							})
+							.catch((collected) => {
+								// console.log("no one Like/Dislike?");
+							});
+						msg.delete({ timeout: 20000 });
+					});
+			}
+		});
+	},
 };

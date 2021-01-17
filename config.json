@@ -1,11 +1,11 @@
 {
-    "prefix": "/",
-    "channels": {
-        "general": "449180893781950474",
-        "confession": "776918298092240948"
-    },
-    "emoji": {
-        "goose": "<a:goose:780005119143968769>",
-        "meowtf": "<:meowtf:779168833129807893>"
-    }
+	"prefix": "/",
+	"channels": {
+		"general": "449180893781950474",
+		"confession": "776918298092240948"
+	},
+	"emoji": {
+		"goose": "<a:goose:780005119143968769>",
+		"meowtf": "<:meowtf:779168833129807893>"
+	}
 }
