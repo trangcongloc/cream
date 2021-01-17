@@ -3,7 +3,7 @@ const remindme = (content, timeout, server, message) => {
     let dt = new Date();
     let gmtdt = dt.toLocaleString("en-US", { timeZone: "GMT" });
     let gmt7dt = new Date(new Date(gmtdt).getTime() + 7 * 3600000);
-    let finalTime = new Date(gmt7dt.getTime() + timeout * 1000);
+    let finalTime = new Date(gmt7dt.getTime() + timeout * 60000);
 
     message.channel
         .send(
@@ -25,7 +25,7 @@ const remindme = (content, timeout, server, message) => {
                     "en-US"
                 )}\`\n > 📝 Nội dung: \`${content}\``
             );
-    }, timeout * 1000);
+    }, timeout * 60000);
 };
 
 module.exports = {

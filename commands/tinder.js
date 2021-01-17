@@ -19,17 +19,17 @@ module.exports = {
                             )
                         ].user;
 
-                    // // remove from recommend
-                    // const options = {
-                    //     url: `https://api.gotinder.com/pass/${user._id}`,
-                    //     headers: {
-                    //         "x-auth-token": process.env.TINDER_TOKEN,
-                    //     },
-                    // };
+                    // remove from recommend
+                    const options = {
+                        url: `https://api.gotinder.com/pass/${user._id}`,
+                        headers: {
+                            "x-auth-token": process.env.TINDER_TOKEN,
+                        },
+                    };
 
-                    // request(passUrl, (_err, response, body) => {
-                    //     console.log(JSON.parse(body).status);
-                    // });
+                    request(passUrl, (_err, response, body) => {
+                        console.log(JSON.parse(body).status);
+                    });
 
                     const tinderEmbed = new Discord.MessageEmbed()
                         .setColor(message.member.displayHexColor)
