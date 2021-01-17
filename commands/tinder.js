@@ -27,7 +27,7 @@ module.exports = {
                         },
                     };
 
-                    request(passUrl, (_err, response, body) => {
+                    request(options, (_err, response, body) => {
                         console.log(JSON.parse(body).status);
                     });
 
