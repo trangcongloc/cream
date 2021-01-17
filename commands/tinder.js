@@ -72,7 +72,7 @@ module.exports = {
 
 						msg.awaitReactions(filter, {
 							max: 1,
-							time: 19999,
+							time: 60000,
 							errors: ["time"],
 						})
 							.then((collected) => {
@@ -84,22 +84,24 @@ module.exports = {
 									});
 									msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));
 									message.reply(`Đã Like ${user.name} 😍`).then((msg) => {
-										msg.delete({ timeout: 10000 });
+										msg.delete({ timeout: 5000 });
 									});
+									msg.delete({ timeout: 5000 });
 								} else {
 									tinder.dislike(user._id, process.env.TINDER_TOKEN, (data) => {
 										// console.log(data);
 									});
 									msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));
 									message.reply(`Đã Dislike ${user.name} 😢`).then((msg) => {
-										msg.delete({ timeout: 10000 });
+										msg.delete({ timeout: 5000 });
 									});
+									msg.delete({ timeout: 5000 });
 								}
 							})
 							.catch((collected) => {
 								// console.log("no one Like/Dislike?");
+								msg.delete({ timeout: 1000 });
 							});
-						msg.delete({ timeout: 20000 });
 					});
 			}
 		});
