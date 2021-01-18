@@ -78,10 +78,11 @@ module.exports = {
 		}
 	},
 	ixicute(client, interaction, args) {
+		const channel = interaction.guild.channels.cache.get(interaction.channel_id);
 		const generalChannel = interaction.guild.channels.cache.get(client.config.guild.channels.general);
 		const member = interaction.guild.members.cache.get(interaction.member.user.id);
 		if (!args[0].value) {
-			generalChannel.send("Đưa cái ID Tinder đây " + client.config.emoji.meowtf).then((msg) => msg.delete({ timeout: 3000 }));
+			channel.send("Đưa cái ID Tinder đây " + client.config.emoji.meowtf).then((msg) => msg.delete({ timeout: 3000 }));
 		} else {
 			tinder.info(args[0].value, process.env.TINDER_TOKEN, (info) => {
 				const user = info.results;
@@ -138,7 +139,28 @@ module.exports = {
 					.setTimestamp()
 					.setFooter(user._id, client.user.avatarURL());
 
-				generalChannel.send(tinderEmbed).then((msg) => msg.delete({ timeout: 20000 }));
+				channel.send(tinderEmbed).then((msg) => {
+					msg.react("❌");
+					const filter = (reaction, user) => {
+						return ["❌"].includes(reaction.emoji.name) && user.id === interaction.member.user.id;
+					};
+
+					msg.awaitReactions(filter, {
+						max: 1,
+						time: 20000,
+						errors: ["time"],
+					})
+						.then((collected) => {
+							const reaction = collected.first();
+
+							if (reaction.emoji.name === "❌") {
+								msg.delete({ timeout: 100 });
+							}
+						})
+						.catch((collected) => {
+							msg.delete({ timeout: 10000 });
+						});
+				});
 			});
 		}
 	},

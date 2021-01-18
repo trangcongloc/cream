@@ -13,6 +13,7 @@ const remindme = (content, timeout, message) => {
 };
 
 const remindmeInteraction = (content, timeout, interaction, client) => {
+	const channel = interaction.guild.channels.cache.get(interaction.channel_id);
 	const generalChannel = interaction.guild.channels.cache.get(client.config.guild.channels.general);
 	const remindmeChannel = interaction.guild.channels.cache.get(client.config.guild.channels.remindme);
 	const member = interaction.guild.members.cache.get(interaction.member.user.id);
@@ -22,7 +23,7 @@ const remindmeInteraction = (content, timeout, interaction, client) => {
 	let gmt7dt = new Date(new Date(gmtdt).getTime() + 7 * 3600000);
 	let finalTime = new Date(gmt7dt.getTime() + timeout * 60000);
 
-	generalChannel
+	channel
 		.send(`Đã đặt nhắc nhở cho <@${interaction.member.user.id}>\n> 📝 Nội dung: \`${content}\`\n> ⏰ Vào lúc: \`${finalTime.toLocaleString("vi-VN")}\``)
 		.then((msg) => msg.delete({ timeout: 10000 }));
 	setTimeout(() => {

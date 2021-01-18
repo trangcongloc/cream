@@ -109,6 +109,7 @@ module.exports = {
 	},
 
 	ixicute(client, interaction, args) {
+		const channel = interaction.guild.channels.cache.get(interaction.channel_id);
 		const generalChannel = interaction.guild.channels.cache.get(client.config.guild.channels.general);
 		const member = interaction.guild.members.cache.get(interaction.member.user.id);
 		tinder.core(process.env.TINDER_TOKEN, (info) => {
@@ -167,7 +168,7 @@ module.exports = {
 						.setTimestamp()
 						.setFooter(user._id, client.user.avatarURL());
 
-					generalChannel.send(tinderEmbed).then((msg) => {
+					channel.send(tinderEmbed).then((msg) => {
 						msg.react("👍").then(() => msg.react("👎"));
 						const filter = (reaction, user) => {
 							return ["👍", "👎"].includes(reaction.emoji.name) && user.id === interaction.member.user.id;
@@ -186,7 +187,7 @@ module.exports = {
 										// console.log(data);
 									});
 									msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));
-									generalChannel.send(`<@${interaction.member.user.id}> Đã Like ${user.name} 😍`).then((msg) => {
+									channel.send(`<@${interaction.member.user.id}> Đã Like ${user.name} 😍`).then((msg) => {
 										msg.delete({ timeout: 5000 });
 									});
 									msg.delete({ timeout: 5000 });
@@ -195,7 +196,7 @@ module.exports = {
 										// console.log(data);
 									});
 									msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));
-									generalChannel.send(`<@${interaction.member.user.id}> Đã Dislike ${user.name} 😢`).then((msg) => {
+									channel.send(`<@${interaction.member.user.id}> Đã Dislike ${user.name} 😢`).then((msg) => {
 										msg.delete({ timeout: 5000 });
 									});
 									msg.delete({ timeout: 5000 });

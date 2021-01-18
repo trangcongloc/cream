@@ -128,7 +128,6 @@ module.exports = {
 		}
 	},
 	async ixicute(client, interaction, args) {
-		console.log(args[0].value);
 		const member = interaction.guild.members.cache.get(interaction.member.user.id);
 		const ytRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
 		this.servers[interaction.guild.id] = { queue: [] };
