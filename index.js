@@ -50,20 +50,6 @@ client.ws.on("INTERACTION_CREATE", async (interaction) => {
 
 client.on("message", (message) => {
 	const args = message.content.slice(client.config.prefix.length).trim().split(/ +/);
-	// Specific message
-	if (message.content == "<@!765432728052563989>") {
-		// message.reply("tag con cằc" + client.config.emoji.goose);
-	}
-	// Specific Channel code
-	switch (message.channel.id) {
-		case client.config.channels.confession:
-			// webhooks
-			const webhookClient = new Discord.WebhookClient(client.config.webhooks.confession.id, client.config.webhooks.confession.token);
-
-			message.delete({ timeout: 0 });
-			const cfsChannel = message.guild.channels.cache.get(client.config.channels.general);
-			webhookClient.send(message.content);
-	}
 });
 
 // console uncaught error

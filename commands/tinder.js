@@ -110,7 +110,7 @@ module.exports = {
 
 	ixicute(client, interaction, args) {
 		const channel = interaction.guild.channels.cache.get(interaction.channel_id);
-		const generalChannel = interaction.guild.channels.cache.get(client.config.guild.channels.general);
+		const tinderProfileChannel = interaction.guild.channels.cache.get(client.config.guild.channels.tinderprofile);
 		const member = interaction.guild.members.cache.get(interaction.member.user.id);
 		tinder.core(process.env.TINDER_TOKEN, (info) => {
 			switch (info.meta.status) {
@@ -169,9 +169,9 @@ module.exports = {
 						.setFooter(user._id, client.user.avatarURL());
 
 					channel.send(tinderEmbed).then((msg) => {
-						msg.react("👍").then(() => msg.react("👎"));
+						msg.react("👍").then(() => msg.react("👎").then(() => msg.react("👼")));
 						const filter = (reaction, user) => {
-							return ["👍", "👎"].includes(reaction.emoji.name) && user.id === interaction.member.user.id;
+							return ["👍", "👎", "👼"].includes(reaction.emoji.name) && user.id === interaction.member.user.id;
 						};
 
 						msg.awaitReactions(filter, {
@@ -191,7 +191,7 @@ module.exports = {
 										msg.delete({ timeout: 5000 });
 									});
 									msg.delete({ timeout: 5000 });
-								} else {
+								} else if (reaction.emoji.name === "") {
 									tinder.dislike(user._id, process.env.TINDER_TOKEN, (data) => {
 										// console.log(data);
 									});
@@ -199,6 +199,13 @@ module.exports = {
 									channel.send(`<@${interaction.member.user.id}> Đã Dislike ${user.name} 😢`).then((msg) => {
 										msg.delete({ timeout: 5000 });
 									});
+									msg.delete({ timeout: 5000 });
+								} else if (reaction.emoji.name === "👼") {
+									tinderProfileChannel.send(tinderEmbed);
+									channel.send(`<@${interaction.member.user.id}> Đã save profile ${user.name} 👼 tại <#${client.config.guild.channels.tinderprofile}>`).then((msg) => {
+										msg.delete({ timeout: 5000 });
+									});
+
 									msg.delete({ timeout: 5000 });
 								}
 							})
