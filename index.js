@@ -12,30 +12,58 @@ const commandFiles = fs.readdirSync("./commands").filter((file) => file.endsWith
 
 client.login(process.env.DISCORD_TOKEN);
 
-for (const file of commandFiles) {
-	const commandName = require(`./commands/${file}`);
-	client.commands.set(commandName.name, commandName);
-}
 client.once("ready", () => {
 	console.log("Cream on Duty");
+	for (const file of commandFiles) {
+		const commandName = require(`./commands/${file}`);
+		client.commands.set(commandName.name, commandName);
+		if (commandName.interaction == true) {
+			client.api
+				.applications(client.user.id)
+				.guilds(client.config.guild.id)
+				.commands.post({
+					data: {
+						name: commandName.name,
+						description: commandName.description,
+						options: commandName.options,
+					},
+				});
+		}
+	}
+
+	// ! Test Slash Commands
+});
+
+client.ws.on("INTERACTION_CREATE", async (interaction) => {
+	const commandName = interaction.data.name.toLowerCase();
+	const args = interaction.data.options;
+	try {
+		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+		interaction.guild = client.guilds.cache.get(client.config.guild.id);
+		command.ixicute(client, interaction, args);
+
+		if (!command) return;
+	} catch (_err) {
+		console.error("Command Handling error", _err);
+	}
 });
 
 client.on("message", (message) => {
 	const args = message.content.slice(client.config.prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
-	if (message.content.startsWith(client.config.prefix)) {
-		message.delete({ timeout: 1500 });
+	// if (message.content.startsWith(client.config.prefix)) {
+	// 	message.delete({ timeout: 1500 });
 
-		try {
-			const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
-			command.execute(client, message, args);
+	// 	try {
+	// 		const command = client.commands.get(commandName) || client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+	// 		command.execute(client, message, args);
 
-			if (!command) return;
-		} catch (_err) {
-			message.channel.send("Không có lệnh đấy", client.config.emoji.meowtf).then((msg) => msg.delete({ timeout: 1500 }));
-		}
-	}
+	// 		if (!command) return;
+	// 	} catch (_err) {
+	// 		message.channel.send("Không có lệnh đấy", client.config.emoji.meowtf).then((msg) => msg.delete({ timeout: 1500 }));
+	// 	}
+	// }
 	// Specific message
 	if (message.content == "<@!765432728052563989>") {
 		message.reply("tag con cằc" + client.config.emoji.goose);
