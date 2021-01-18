@@ -191,7 +191,7 @@ module.exports = {
 										msg.delete({ timeout: 5000 });
 									});
 									msg.delete({ timeout: 5000 });
-								} else if (reaction.emoji.name === "") {
+								} else if (reaction.emoji.name === "👎") {
 									tinder.dislike(user._id, process.env.TINDER_TOKEN, (data) => {
 										// console.log(data);
 									});
