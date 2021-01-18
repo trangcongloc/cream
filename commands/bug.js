@@ -41,19 +41,6 @@ module.exports = {
 		const target = interaction.guild.members.cache.get(args[0].value);
 		const exePerm = interaction.guild.roles.cache.find((r) => r.name.toLowerCase() == "đao phủ");
 		const bugRole = interaction.guild.roles.cache.find((r) => r.name.toLowerCase() == "bug");
-		if (target == undefined) {
-			message.reply("Hành hình ai thì phải nêu rõ tên nó ra" + client.config.emoji.meowtf).then((msg) => msg.delete({ timeout: 5000 }));
-			return;
-		}
-
-		if (exePerm == undefined) {
-			message.reply("Đ' có role <@&778747259918745621> đòi hành hình người khác?" + client.config.emoji.meowtf).then((msg) => msg.delete({ timeout: 5000 }));
-			return;
-		}
-
-		if (bugRole == undefined) {
-			message.reply("Server phải có role `bug` mới có thể dùng được lệnh");
-		}
 		target.roles.add(bugRole);
 		target.voice.setMute(true);
 		botlogChannel.send(`Đã xóa đi tư cách làm người của ${target} trong ${args[1].value} phút\n> 🔪 Đao phủ: <@${interaction.member.user.id}>\n> ⏰ Timeout: ${finalTime.toLocaleString("vi-VN")}`);
