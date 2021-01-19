@@ -18,6 +18,7 @@ module.exports = {
 			url: `https://api.gotinder.com/user/${tinderID}?locale=vi`,
 			headers: {
 				"x-auth-token": token,
+				"accept-language": "vi",
 			},
 		};
 		request(options, (_err, response, body) => {
