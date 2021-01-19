@@ -9,7 +9,7 @@ module.exports = {
 	options: [],
 	aliases: ["td"],
 	execute(client, message, args) {
-		tinder.core(process.env.TINDER_TOKEN, (info) => {
+		tinder.core((info) => {
 			switch (info.meta.status) {
 				case 200:
 					const profile = info.data.results[Math.floor(Math.random() * (info.data.results.length - 1))];
@@ -112,7 +112,7 @@ module.exports = {
 		const channel = interaction.guild.channels.cache.get(interaction.channel_id);
 		const tinderProfileChannel = interaction.guild.channels.cache.get(client.config.guild.channels.tinderprofile);
 		const member = interaction.guild.members.cache.get(interaction.member.user.id);
-		tinder.core(process.env.TINDER_TOKEN, (info) => {
+		tinder.core((info) => {
 			switch (info.meta.status) {
 				case 200:
 					const profile = info.data.results[Math.floor(Math.random() * (info.data.results.length - 1))];
@@ -138,7 +138,9 @@ module.exports = {
 						interests.forEach((i) => {
 							interests_string += `- ${i.name}\n`;
 						});
+						console.log(profile.experiment_info.user_interests.selected_interests);
 					}
+
 					const tinderEmbed = new Discord.MessageEmbed()
 						.setColor(member.displayHexColor)
 						.setTitle(`${userName} - ${user.birth_date.slice(0, 4)}`)
@@ -183,7 +185,7 @@ module.exports = {
 								const reaction = collected.first();
 
 								if (reaction.emoji.name === "👍") {
-									tinder.like(user._id, process.env.TINDER_TOKEN, (data) => {
+									tinder.like(user._id, (data) => {
 										// console.log(data);
 									});
 									msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));
@@ -192,7 +194,7 @@ module.exports = {
 									});
 									msg.delete({ timeout: 5000 });
 								} else if (reaction.emoji.name === "👎") {
-									tinder.dislike(user._id, process.env.TINDER_TOKEN, (data) => {
+									tinder.dislike(user._id, (data) => {
 										// console.log(data);
 									});
 									msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));

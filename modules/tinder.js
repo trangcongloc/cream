@@ -1,11 +1,11 @@
 const request = require("request");
 
 module.exports = {
-	core: async (token, callback) => {
+	core: async (callback) => {
 		const options = {
 			url: "https://api.gotinder.com/v2/recs/core?locale=vi",
 			headers: {
-				"x-auth-token": token,
+				"x-auth-token": process.env.TINDER_TOKEN,
 			},
 		};
 		request(options, (_err, response, body) => {
@@ -13,12 +13,11 @@ module.exports = {
 			callback(info);
 		});
 	},
-	info: async (tinderID, token, callback) => {
+	info: async (tinderID, callback) => {
 		const options = {
 			url: `https://api.gotinder.com/user/${tinderID}?locale=vi`,
 			headers: {
-				"x-auth-token": token,
-				"accept-language": "vi",
+				"x-auth-token": process.env.TINDER_TOKEN,
 			},
 		};
 		request(options, (_err, response, body) => {
@@ -26,7 +25,7 @@ module.exports = {
 			callback(info);
 		});
 	},
-	like: async (tinderID, token, callback) => {
+	like: async (tinderID, callback) => {
 		// Like profile
 		const options = {
 			url: `https://api.gotinder.com/like/${tinderID}`,
@@ -40,7 +39,7 @@ module.exports = {
 			callback(data);
 		});
 	},
-	dislike: async (tinderID, token, callback) => {
+	dislike: async (tinderID, callback) => {
 		// Like profile
 		const options = {
 			url: `https://api.gotinder.com/pass/${tinderID}`,
