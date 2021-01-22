@@ -83,28 +83,25 @@ const hmuhmu = async (client, interaction, args, callback) => {
 								tinderProfileChannel.send(tinderEmbed);
 								msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));
 
-								channel.send(`<@${interaction.member.user.id}> Đã Like ${user.name} 😍`).then((msg) => {
-									msg.delete({ timeout: 5000 });
-									channel.send("Đang tìm profile khác <a:crumbdance:782239214804402246>").then((msg) => {
+								channel
+									.send(`<@${interaction.member.user.id}> Đã Like ${user.name} 😍\n> Đang tìm profile khác <a:crumbdance:782239214804402246>\n> Bấm ❌ để ngừng tìm profile`)
+									.then((__msg) => {
 										hmuhmu(client, interaction, args);
-										msg.delete({ timeout: 1000 });
+										__msg.delete({ timeout: 2500 });
+										msg.delete({ timeout: 100 });
 									});
-								});
-								msg.delete({ timeout: 5000 });
 							} else if (reaction.emoji.name === "👎") {
 								tinder.dislike(user._id, (data) => {
 									// console.log(data);
 								});
 								msg.reactions.removeAll().catch((_err) => console.error("Failed to clear reactions", _err));
-
-								channel.send(`<@${interaction.member.user.id}> Đã Dislike ${user.name} 😢`).then((msg) => {
-									msg.delete({ timeout: 5000 });
-									channel.send("Đang tìm profile khác <a:crumbdance:782239214804402246>").then((msg) => {
+								channel
+									.send(`<@${interaction.member.user.id}> Đã Dislike ${user.name} 😢\n> Đang tìm profile khác <a:crumbdance:782239214804402246>\n> Bấm ❌ để ngừng tìm profile`)
+									.then((__msg) => {
 										hmuhmu(client, interaction, args);
-										msg.delete({ timeout: 1000 });
+										__msg.delete({ timeout: 2500 });
+										msg.delete({ timeout: 100 });
 									});
-								});
-								msg.delete({ timeout: 5000 });
 							} else if (reaction.emoji.name === "❌") {
 								msg.delete({ timeout: 1000 });
 							}
