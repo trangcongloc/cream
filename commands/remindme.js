@@ -50,15 +50,6 @@ module.exports = {
 		},
 	],
 	aliases: ["remind", "rm"],
-	execute(client, message, args) {
-		this.servers[message.channel.id] = [];
-		let server = this.servers[message.channel.id];
-		if (parseInt(args[args.length - 1]) == NaN) {
-			message.channel.send("Phải đặt thời gian nữa <:meowtf:779168833129807893>\n > `/remindme` + `nội dung` + `thời gian(giây)`").then((msg) => msg.delete({ timeout: 5000 }));
-		} else {
-			remindme(args.join(" ").slice(0, args.join(" ").length - args[args.length - 1].length - 1), args[args.length - 1], server, message);
-		}
-	},
 	ixicute(client, interaction, args) {
 		remindmeInteraction(args[0].value, args[1].value, interaction, client);
 	},

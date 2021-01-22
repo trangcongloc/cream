@@ -105,28 +105,6 @@ module.exports = {
 	options: [{ name: "song", description: "Song name", required: true, type: 3 }],
 	aliases: ["p", "phat"],
 	servers: {},
-	async execute(client, message, args) {
-		const ytRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;
-		this.servers[message.guild.id] = { queue: [] };
-		let server = this.servers[message.guild.id];
-		let song;
-		if (!message.guild) return;
-
-		if (message.member.voice.channel) {
-			const connection = await message.member.voice.channel.join();
-			if (args[0].match(ytRegex)) {
-				server.queue.push(args[0]);
-			} else {
-				const { videos } = await yts(args.join(" "));
-				server.queue.push(videos[0].url);
-			}
-			try {
-				play(connection, message, server, client);
-			} catch (_err) {
-				play(connection, message, server, client);
-			}
-		}
-	},
 	async ixicute(client, interaction, args) {
 		const member = interaction.guild.members.cache.get(interaction.member.user.id);
 		const ytRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/g;

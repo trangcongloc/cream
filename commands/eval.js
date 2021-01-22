@@ -11,10 +11,6 @@ module.exports = {
 		},
 	],
 	aliases: ["run"],
-	execute(client, message, args) {
-		if (message.author.id != "207901163419467776") return;
-		eval(args[0]);
-	},
 	ixicute(client, interaction, args, inter) {
 		if (interaction.member.user.id != "207901163419467776") return;
 		eval(args[0].value);

@@ -14,12 +14,6 @@ module.exports = {
 		},
 	],
 	aliases: ["created"],
-	execute(client, message, args) {
-		time.snowflake(message.author.id, () => {
-			const attachment = new MessageAttachment("images/snowflake.png");
-			message.reply(attachment).then((msg) => msg.delete({ timeout: 10000 }));
-		});
-	},
 	ixicute(client, interaction, args) {
 		const channel = interaction.guild.channels.cache.get(interaction.channel_id);
 		const generalChannel = interaction.guild.channels.cache.get(client.config.guild.channels.general);
