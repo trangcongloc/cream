@@ -51,7 +51,6 @@ client.ws.on("INTERACTION_CREATE", async (interaction) => {
 client.on("message", (message) => {
 	const args = message.content.slice(client.config.prefix.length).trim().split(/ +/);
 });
-
 // console uncaught error
 process.on("uncaughtException", (_err, origin) => {
 	console.error(_err);

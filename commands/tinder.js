@@ -12,13 +12,10 @@ const hmuhmu = async (client, interaction, args, callback) => {
 				const user = profile.user;
 				// school
 				const userSchool = user.schools.length != 0 ? user.schools[0].name : " ¯\\_(ツ)_/¯";
-
 				// workplace
 				const userJob = user.jobs.length != 0 ? user.jobs[0].name : " ¯\\_(ツ)_/¯";
-
 				// Location
 				const userLocation = user.city == undefined ? "(っ °Д °;)っ đâu đó cách đây" : `Tại ${user.city.name} cách đây`;
-
 				// interets
 				let interests;
 				let interests_string = "";
@@ -111,6 +108,8 @@ const hmuhmu = async (client, interaction, args, callback) => {
 							msg.delete({ timeout: 1000 });
 						});
 				});
+			default:
+				console.log(info);
 		}
 	});
 };

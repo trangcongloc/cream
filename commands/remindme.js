@@ -23,9 +23,7 @@ const remindmeInteraction = (content, timeout, interaction, client) => {
 	let gmt7dt = new Date(new Date(gmtdt).getTime() + 7 * 3600000);
 	let finalTime = new Date(gmt7dt.getTime() + timeout * 60000);
 
-	channel
-		.send(`Đã đặt nhắc nhở cho <@${interaction.member.user.id}>\n> 📝 Nội dung: \`${content}\`\n> ⏰ Vào lúc: \`${finalTime.toLocaleString("vi-VN")}\``)
-		.then((msg) => msg.delete({ timeout: 10000 }));
+	channel.send(`Đã đặt nhắc nhở cho <@${interaction.member.user.id}>\n> 📝 Nội dung: \`${content}\`\n> ⏰ Vào lúc: \`${finalTime.toLocaleString("vi-VN")}\``);
 	setTimeout(() => {
 		member.send(`<@${interaction.member.user.id}>, Nhắc nhở từ lúc \`${gmt7dt.toLocaleString("vi-VN")}\`\n > 📝 Nội dung: \`${content}\``);
 	}, timeout * 60000);
