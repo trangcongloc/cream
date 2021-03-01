@@ -28,7 +28,7 @@ module.exports = {
 
 		target.roles.add(bugRole);
 		target.voice.setMute(true);
-		botlogChannel.send(`Đã xóa đi tư cách làm người của ${target} trong ${args[1].value} phút\n> 🔪 Đao phủ: <@${interaction.member.user.id}>\n> ⏰ Timeout: ${finalTime.toLocaleString("vi-VN")}`);
+		channel.send(`Đã xóa đi tư cách làm người của ${target} trong ${args[1].value} phút\n> 🔪 Đao phủ: <@${interaction.member.user.id}>\n> ⏰ Timeout: ${finalTime.toLocaleString("vi-VN")}`);
 		setTimeout(() => {
 			target.roles.remove(bugRole);
 			target.voice.setMute(false);
