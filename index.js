@@ -29,10 +29,6 @@ client.once("ready", () => {
 					},
 				});
 		}
-
-		setInterval(() => {
-			client.channels.cache.get("449180893781950474").send("<@207901163419467776> nước");
-		}, 1800000);
 	}
 
 	// ! Test Slash Commands
