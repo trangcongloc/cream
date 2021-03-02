@@ -5,6 +5,7 @@ module.exports = {
 	options: [
 		{ name: "user", description: "User to Exodia", required: true, type: 6 },
 		{ name: "time", description: "Timeout", required: true, type: 4 },
+		// { name: "description", description: "note", required: false, type: 3 },
 	],
 	aliases: ["exodia"],
 	ixicute(client, interaction, args) {
@@ -28,7 +29,7 @@ module.exports = {
 
 		target.roles.add(bugRole);
 		target.voice.setMute(true);
-		channel.send(`Đã xóa đi tư cách làm người của ${target} trong ${args[1].value} phút\n> 🔪 Đao phủ: <@${interaction.member.user.id}>\n> ⏰ Timeout: ${finalTime.toLocaleString("vi-VN")}`);
+		channel.send(`Đã xóa đi tư cách làm người của ${target} trong ${args[1].value} phút\n> 🔪 Executioner: <@${interaction.member.user.id}>\n> ⏰ Timeout: ${finalTime.toLocaleString("vi-VN")}`);
 		setTimeout(() => {
 			target.roles.remove(bugRole);
 			target.voice.setMute(false);
